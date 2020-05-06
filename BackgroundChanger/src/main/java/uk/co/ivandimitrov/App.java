@@ -88,4 +88,8 @@ public final class App {
         }
     }
 }
+<<<<<<< HEAD
 >>>>>>> 2a010a0... Add files via upload
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> 5b2d65917f2d8186a0eaf2263995c748ca2ddaed

@@ -193,10 +193,18 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.0.0</version>
                     <dependencies>
+<<<<<<< HEAD
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
                             <version>8.10</version>
+=======
+                        <!-- https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle -->
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.32</version>
+>>>>>>> 5b2d65917f2d8186a0eaf2263995c748ca2ddaed
                         </dependency>
                         <dependency>
                             <groupId>com.github.ngeor</groupId>
@@ -322,4 +330,8 @@
         </profile>
     </profiles>
 </project>
+<<<<<<< HEAD
 >>>>>>> 2a010a0... Add files via upload
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> 5b2d65917f2d8186a0eaf2263995c748ca2ddaed
