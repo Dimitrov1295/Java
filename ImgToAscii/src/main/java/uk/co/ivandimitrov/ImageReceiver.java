@@ -7,6 +7,11 @@ import java.io.OutputStream;
 
 import com.vaadin.ui.Upload.Receiver;
 
+/**
+ * Custum output stream that gets all the bytes from the uploaded image and
+ * writes them to memory as a byte array, which can then be used to get an
+ * InputStream.
+ */
 public class ImageReceiver extends ByteArrayOutputStream implements Receiver {
 
     /**
