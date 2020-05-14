@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * A class used to contain the database results.
+ */
 @Entity
 public class Family {
     @Id
