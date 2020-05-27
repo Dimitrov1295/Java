@@ -25,11 +25,10 @@ public class ImageToAsciiConverter {
         ImagePlus imp = new ImagePlus("", imageProcessor.resize(300, 300));
         int[] size = imp.getDimensions();
         int width = size[0], height = size[1];
+        ImageToAsciiUtil util = new ImageToAsciiUtil();
         return IntStream.range(0, width * height).parallel()
-                .map(i -> i % width != 0 ? ImageToAsciiUtil.convertToBrightness(imp.getPixel((i % width), (i / width)))
-                        : -1)
-                .mapToObj(i -> i == -1 ? "\n" : ImageToAsciiUtil.getAsciiSymbol(i)).sequential()
-                .collect(Collectors.joining());
+                .map(i -> i % width != 0 ? util.convertToBrightness(imp.getPixel((i % width), (i / width))) : -1)
+                .mapToObj(i -> i == -1 ? "\n" : util.getAsciiSymbol(i)).sequential().collect(Collectors.joining());
     }
 
     /**
@@ -41,7 +40,7 @@ public class ImageToAsciiConverter {
          * @param arr the array containing pixel RGB data.
          * @return Returns the averaged RGB value. (( R + G + B ) / 3 )
          */
-        static int convertToBrightness(int[] arr) {
+        private int convertToBrightness(int[] arr) {
             return ((arr[0] + arr[1] + arr[2]) / 3);
         }
 
@@ -53,7 +52,7 @@ public class ImageToAsciiConverter {
          * @param b2 new upper range.
          * @return Returns s with values ranging from b1 to b2.
          */
-        private static float map(float s, float a1, float a2, float b1, float b2) {
+        private float map(float s, float a1, float a2, float b1, float b2) {
             return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
         }
 
@@ -62,7 +61,7 @@ public class ImageToAsciiConverter {
          *                   symbol.
          * @return Returns the ASCII symbol associated with the provided brightness.
          */
-        static String getAsciiSymbol(int brightness) {
+        private String getAsciiSymbol(int brightness) {
             String ASCII = " .,:ilwW#MW&8%B@$";
             String s = String.valueOf(ASCII.charAt((int) map(brightness, 0, 255, 0, ASCII.length() - 1)));
             return s + s + s;
