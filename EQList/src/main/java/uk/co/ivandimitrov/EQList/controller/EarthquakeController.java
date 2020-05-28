@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.EQList;
+package uk.co.ivandimitrov.EQList.controller;
 
 import java.time.LocalDate;
 
@@ -12,7 +12,6 @@ import uk.co.ivandimitrov.EQList.util.EQUtil;
 @Controller
 public class EarthquakeController {
 
-    
     @RequestMapping("/")
     public ModelAndView query(@RequestParam(value = "minMag", required = false, defaultValue = "3") String minMag,
             @RequestParam(value = "maxMag", required = false, defaultValue = "10") String maxMag,
@@ -22,7 +21,9 @@ public class EarthquakeController {
             maxDate = LocalDate.now().toString();
         ModelAndView mv = new ModelAndView();
         mv.setViewName("eqdata");
-        mv.addObject("earthquakes", EQUtil.getList(minMag, maxMag, minDate, maxDate));// gets a list of earthquakes and adds them to the ModelAndView object.
+        mv.addObject("earthquakes", EQUtil.getList(minMag, maxMag, minDate, maxDate));// gets a list of earthquakes and
+                                                                                      // adds them to the ModelAndView
+                                                                                      // object.
         return mv;
     }
 
