@@ -1,5 +1,7 @@
 This is a Spring demo that takes data from the USGS API and displays it to the screen.
 
+See it hosted here: http://www.ivandimitrov.co.uk/Earthquakes/
+
 # Getting Started
 
 ### Reference Documentation
