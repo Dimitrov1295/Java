@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov;
+package uk.co.ivandimitrov.oshi;
 
 import java.util.ArrayList;
 import java.util.Arrays;

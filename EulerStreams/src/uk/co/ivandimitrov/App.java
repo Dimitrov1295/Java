@@ -3,6 +3,10 @@ package uk.co.ivandimitrov;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import uk.co.ivandimitrov.util.EulerUtils;
+import uk.co.ivandimitrov.util.FibGen;
+import uk.co.ivandimitrov.util.PrimeGen;
+
 /**
  * This program doesn't use any loops and calculates the first 5 questions from
  * project euler.

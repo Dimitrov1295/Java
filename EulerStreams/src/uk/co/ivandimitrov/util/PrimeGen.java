@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov;
+package uk.co.ivandimitrov.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public class PrimeGen {
      * @param n the limit up to which primes should be generated.
      * @return Returns a list containing prime numbers only.
      */
-    static List<Integer> getPrimes(int n) {
+    public static List<Integer> getPrimes(int n) {
         // I don't like this approach, but I couldn't figure out another solution given
         // the restriction of not using loops.
         boolean prime[] = new boolean[n + 1];

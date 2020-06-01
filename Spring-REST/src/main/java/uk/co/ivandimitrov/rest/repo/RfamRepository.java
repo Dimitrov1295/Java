@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.rest;
+package uk.co.ivandimitrov.rest.repo;
 
 import java.util.List;
 
@@ -11,7 +11,8 @@ public interface RfamRepository extends JpaRepository<Family, String> {
      * 
      * @param minCreated Date from which to constrain.
      * @param maxCreated Date to which to constrain.
-     * @return Returns a list of objects constrained by date parameters. (See database contents for more info)
+     * @return Returns a list of objects constrained by date parameters. (See
+     *         database contents for more info)
      */
     @Query("from Family where created>?1 and created<?2")
     List<Family> findByCreateDate(String minCreated, String maxCreated);

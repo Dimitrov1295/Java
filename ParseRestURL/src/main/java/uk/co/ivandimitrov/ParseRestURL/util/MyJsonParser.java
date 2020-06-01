@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.ParseRestURL;
+package uk.co.ivandimitrov.ParseRestURL.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

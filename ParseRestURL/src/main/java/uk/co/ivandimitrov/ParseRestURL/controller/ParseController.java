@@ -1,9 +1,11 @@
-package uk.co.ivandimitrov.ParseRestURL;
+package uk.co.ivandimitrov.ParseRestURL.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import uk.co.ivandimitrov.ParseRestURL.util.MyJsonParser;
 
 @Controller
 public class ParseController {

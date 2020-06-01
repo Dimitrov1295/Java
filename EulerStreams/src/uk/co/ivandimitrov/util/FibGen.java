@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov;
+package uk.co.ivandimitrov.util;
 
 public class FibGen {
     private static int prevFib = 1;

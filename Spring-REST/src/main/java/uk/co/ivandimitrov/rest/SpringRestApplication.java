@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import uk.co.ivandimitrov.rest.repo.RfamRepository;
+
 @SpringBootApplication
 public class SpringRestApplication {
 

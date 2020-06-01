@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.rest;
+package uk.co.ivandimitrov.rest.controller;
 
 import java.util.List;
 
@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import uk.co.ivandimitrov.rest.repo.Family;
+import uk.co.ivandimitrov.rest.repo.RfamRepository;
 
 @Controller
 public class RestController {

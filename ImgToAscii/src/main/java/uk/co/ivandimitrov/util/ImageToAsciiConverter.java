@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov;
+package uk.co.ivandimitrov.util;
 
 import java.io.IOException;
 import java.io.InputStream;
