@@ -65,11 +65,17 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.20</version>
 		</dependency>
-
+		<!-- Lombok-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
-	<finalName>SpringREST</finalName>
+		<finalName>SpringREST</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
