@@ -1,6 +1,28 @@
-package uk.co.ivandimitrov.EQList.util;
+package uk.co.ivandimitrov.EQList.data.features.geometry;
 
-public class GeoUtil {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Geometry {
+    @JsonProperty("coordinates")
+    Coordinate[] coordinates;
+
+    /**
+     * @return returns the value to be appended to the Google Maps search URL so
+     *         that it displays the origin of the earthquake.
+     */
+    public String getMapsUrl() {
+        double lon = coordinates[0].getLoc().doubleValue();
+        double lat = coordinates[1].getLoc().doubleValue();
+        return GeoUtil.convertDdToDMS(lat, lon) + "/@" + lat + "," + lon + "," + "5z";
+    }
+}
+
+class GeoUtil {
 
     // private helper method that takes a lat or lon and converts it to DMS.
     private static String toDMS(double coordinate) {

@@ -37,7 +37,6 @@
             </form>
             <h4><a href="/">Go home</a></h4>
         </div>
-
         <div th:if="${!earthquakes.isEmpty()}">
             <table class="table">
                 <th>
@@ -49,21 +48,19 @@
                 </th>
                 <tbody>
                     <tr th:each="earthquake, value : ${earthquakes}">
-                        <td class="magnitude" th:text="${earthquake.getMag()}"></td>
+                        <td class="magnitude" th:text="${earthquake.getProperties().getMag()}"></td>
                         <td>
-                            <a target="_blank" th:text="${earthquake.getLocation()}" th:href="@{https://www.google.co.uk/maps/place/} + ${earthquake.getMapsUrl()}"></a>
+                            <a target="_blank" th:text="${earthquake.getProperties().getPlace()}" th:href="@{https://www.google.co.uk/maps/place/} + ${earthquake.getGeometry().getMapsUrl()}"></a>
                         </td>
-                        <td th:text="${earthquake.getTime()}"></td>
+                        <td th:text='${earthquake.getProperties().getDateTime()}'></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
     <div th:if="${earthquakes.isEmpty()}">
         <h3>No earthquakes match the search criteria</h3>
     </div>
-
     <script>
         for (let mag of document.getElementsByClassName("magnitude")) {
             if (Number(mag.innerHTML) > 7) {

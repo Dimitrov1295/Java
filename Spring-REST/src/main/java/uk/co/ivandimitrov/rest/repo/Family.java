@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.rest;
+package uk.co.ivandimitrov.rest.repo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

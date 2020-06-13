@@ -7,12 +7,15 @@ import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.stereotype.Service;
+
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
+@Service
 public class ImageToAsciiConverter {
 
-    public static synchronized String convertImageToAscii(InputStream in) throws IOException {
+    public synchronized String convertImageToAscii(InputStream in) throws IOException {
         ImagePlus image = new ImagePlus("Image", ImageIO.read(in));
         return new ImageToAsciiConverter().process(image);
     }

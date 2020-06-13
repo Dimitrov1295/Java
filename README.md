@@ -1,2 +1,2 @@
 # Java
-A repo for some Java demos
+This repository demonstrates some Java uses
