@@ -31,7 +31,7 @@ public class ImageToAsciiConverter {
         ImageToAsciiUtil util = new ImageToAsciiUtil();
         return IntStream.range(0, width * height)
                 .map(i -> i % width != 0 ? util.convertToBrightness(imp.getPixel((i % width), (i / width))) : -1)
-                .mapToObj(i -> i == -1 ? "<br/>" : util.getAsciiSymbol(i)).collect(Collectors.joining());
+                .mapToObj(i -> i == -1 ? "\n" : util.getAsciiSymbol(i)).collect(Collectors.joining());
     }
 
     /**
@@ -67,7 +67,7 @@ public class ImageToAsciiConverter {
          * @return Returns the ASCII symbol associated with the provided brightness.
          */
         private String getAsciiSymbol(int brightness) {
-            String ASCII = ".,:ilwW#MW&8%B@$ШЩ";
+            String ASCII = " .,:ilwW#MW&8%B@$ШЩ";
             String s = String.valueOf(ASCII.charAt((int) map(brightness, 0, 255, 0, ASCII.length() - 1)));
             return s + s + s;
         }

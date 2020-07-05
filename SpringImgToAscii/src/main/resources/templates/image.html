@@ -20,7 +20,7 @@
     </a>
     <div th:classappend="${ascii.length() > 100} ? normal : error">
         <!-- Expected String length is >> 100 if there is no error. -->
-        <p th:utext="${ascii}"></p>
+        <pre th:utext="${ascii}"></pre>
     </div>
 </body>
 
