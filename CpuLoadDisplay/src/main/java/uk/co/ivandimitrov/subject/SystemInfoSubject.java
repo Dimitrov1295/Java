@@ -11,6 +11,7 @@ import oshi.hardware.HardwareAbstractionLayer;
 import oshi.hardware.Sensors;
 import oshi.util.FormatUtil;
 import oshi.util.Util;
+import uk.co.ivandimitrov.OshiObserver;
 
 /**
  * This is a class I got from here:
@@ -19,17 +20,21 @@ import oshi.util.Util;
  * I've implemented the Singleton pattern so that the methods here won't be
  * called more times than needed.
  */
-public final class SystemInfoTest {
+public final class SystemInfoSubject {
 
     private static final List<String> oshi = new ArrayList<>();
     private static final List<OshiObserver> OBSERVERS = new ArrayList<>();
-    private static final SystemInfoTest instance = new SystemInfoTest();
+    private static final SystemInfoSubject instance = new SystemInfoSubject();
 
     private static final SystemInfo systemInfo = new SystemInfo();
     private static final HardwareAbstractionLayer hardwareAbstractionLayer = systemInfo.getHardware();
     private static boolean hasStarted = false;
 
-    private SystemInfoTest() {
+    private SystemInfoSubject() {
+    }
+
+    public static SystemInfoSubject getInstance() {
+        return instance;
     }
 
     public void addObserver(OshiObserver observer) {
@@ -44,10 +49,6 @@ public final class SystemInfoTest {
         for (OshiObserver obs : OBSERVERS) {
             obs.update(oshi);
         }
-    }
-
-    public static SystemInfoTest getInstance() {
-        return instance;
     }
 
     public void start() {
@@ -70,7 +71,7 @@ public final class SystemInfoTest {
         notifyObservers();
     }
 
-    private static void getCpuInfo(CentralProcessor processor, List<String> oshi) {
+    private void getCpuInfo(CentralProcessor processor, List<String> oshi) {
         oshi.add("Context Switches/Interrupts: " + processor.getContextSwitches() + " / " + processor.getInterrupts());
 
         long[] prevTicks = processor.getSystemCpuLoadTicks();
@@ -127,7 +128,7 @@ public final class SystemInfoTest {
         }
     }
 
-    private static void getSensorsInfo(Sensors sensors, List<String> oshi) {
+    private void getSensorsInfo(Sensors sensors, List<String> oshi) {
         oshi.add("Sensors: " + sensors.toString());
     }
 

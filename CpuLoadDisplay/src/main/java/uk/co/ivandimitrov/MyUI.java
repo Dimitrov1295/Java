@@ -17,8 +17,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import uk.co.ivandimitrov.subject.OshiObserver;
-import uk.co.ivandimitrov.subject.SystemInfoTest;
+import uk.co.ivandimitrov.subject.SystemInfoSubject;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser
@@ -43,7 +42,7 @@ public class MyUI extends UI implements OshiObserver {
     final Label chartDiv = new Label("");
     final Label cpuLoad = new Label("");
     final Label dataLabel = new Label("");
-    final SystemInfoTest sot = SystemInfoTest.getInstance();
+    final SystemInfoSubject sot = SystemInfoSubject.getInstance();
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {

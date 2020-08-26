@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.subject;
+package uk.co.ivandimitrov;
 
 import java.util.List;
 
