@@ -5,17 +5,20 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import uk.co.ivandimitrov.oshi.SystemInfoTest;
+import uk.co.ivandimitrov.subject.OshiObserver;
+import uk.co.ivandimitrov.subject.SystemInfoTest;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser
@@ -28,20 +31,24 @@ import uk.co.ivandimitrov.oshi.SystemInfoTest;
  */
 @Theme("mytheme")
 @JavaScript({ "https://www.gstatic.com/charts/loader.js" })
-public class MyUI extends UI {
+@Push(PushMode.MANUAL)
+public class MyUI extends UI implements OshiObserver {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
+    final VerticalLayout layout = new VerticalLayout();
+    final Label chartDiv = new Label("");
+    final Label cpuLoad = new Label("");
+    final Label dataLabel = new Label("");
+    final SystemInfoTest sot = SystemInfoTest.getInstance();
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
-        final Label chartDiv = new Label("");
-        final SystemInfoTest systemInfoInstance = SystemInfoTest.getInstance();
-        final Label cpuLoad = new Label("");
-        final Label dataLabel = new Label();
+        sot.addObserver(this);
+        sot.start();
 
         cpuLoad.setContentMode(ContentMode.HTML);
         cpuLoad.setValue("<input type='number' id='cpu_load' value='0' style='visibility: hidden;'>");
@@ -70,30 +77,24 @@ public class MyUI extends UI {
                 "setInterval(function() {" + "data.setValue(0, 1, Number(document.getElementById('cpu_load').value));"
                 + "chart.draw(data, options);" + "}, 1000);}");
 
-        // Updates the UI labels with the current OSHI data every second.
-        new Thread(() -> {
-            while (true) {
-                List<String> data = systemInfoInstance.getOshi();
-                StringBuilder sb = new StringBuilder();
-                for (String s : data) {
-                    sb.append(s + "\n");
-                }
-                dataLabel.setValue(sb.toString());
-                cpuLoad.setValue("<input type='number' id='cpu_load' value='" + extractData(data)
-                        + "' style='visibility: hidden;'>");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        setPollInterval(500);
-
         layout.addComponents(chartDiv, cpuLoad, dataLabel);
         setContent(layout);
+    }
+
+    @Override
+    public void update(final List<String> oshi) {
+        System.out.println("updating: " + this);
+        StringBuilder sb = new StringBuilder();
+        for (String s : oshi) {
+            sb.append(s + "\n");
+        }
+        dataLabel.setValue(sb.toString());
+        cpuLoad.setValue(
+                "<input type='number' id='cpu_load' value='" + extractData(oshi) + "' style='visibility: hidden;'>");
+        if (this.isAttached())
+            this.push();
+        else
+            sot.removeObserver(this);
     }
 
     /**
@@ -122,4 +123,5 @@ public class MyUI extends UI {
          */
         private static final long serialVersionUID = 1L;
     }
+
 }

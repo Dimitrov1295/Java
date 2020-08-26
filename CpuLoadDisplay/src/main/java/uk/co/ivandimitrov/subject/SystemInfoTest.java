@@ -1,4 +1,4 @@
-package uk.co.ivandimitrov.oshi;
+package uk.co.ivandimitrov.subject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,33 +22,53 @@ import oshi.util.Util;
 public final class SystemInfoTest {
 
     private static final List<String> oshi = new ArrayList<>();
+    private static final List<OshiObserver> OBSERVERS = new ArrayList<>();
+    private static final SystemInfoTest instance = new SystemInfoTest();
+
+    private static final SystemInfo systemInfo = new SystemInfo();
+    private static final HardwareAbstractionLayer hardwareAbstractionLayer = systemInfo.getHardware();
+    private static boolean hasStarted = false;
 
     private SystemInfoTest() {
-        new Thread(() -> {
-            while (true)
-                updateData();
-        }).start();
     }
 
-    public List<String> getOshi() {
-        return new ArrayList<>(oshi);
+    public void addObserver(OshiObserver observer) {
+        OBSERVERS.add(observer);
     }
 
-    private SystemInfo si = new SystemInfo();
-    private HardwareAbstractionLayer hal = si.getHardware();
+    public void removeObserver(OshiObserver observer) {
+        OBSERVERS.remove(observer);
+    }
 
-    private static final SystemInfoTest instance = new SystemInfoTest();
+    private void notifyObservers() {
+        for (OshiObserver obs : OBSERVERS) {
+            obs.update(oshi);
+        }
+    }
 
     public static SystemInfoTest getInstance() {
         return instance;
     }
 
+    public void start() {
+        if (!hasStarted)
+            synchronized (this) {
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAa");
+                new Thread(() -> {
+                    hasStarted = true;
+                    while (true)
+                        updateData();
+                }).start();
+            }
+    }
+
     private synchronized void updateData() {
         List<String> temp = new ArrayList<>();
-        getCpuInfo(hal.getProcessor(), temp);
-        getSensorsInfo(hal.getSensors(), temp);
+        getCpuInfo(hardwareAbstractionLayer.getProcessor(), temp);
+        getSensorsInfo(hardwareAbstractionLayer.getSensors(), temp);
         oshi.clear();
         oshi.addAll(temp);
+        notifyObservers();
     }
 
     private static void getCpuInfo(CentralProcessor processor, List<String> oshi) {
