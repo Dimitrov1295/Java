@@ -83,7 +83,6 @@ public class MyUI extends UI implements OshiObserver {
 
     @Override
     public void update(final List<String> oshi) {
-        System.out.println("updating: " + this);
         StringBuilder sb = new StringBuilder();
         for (String s : oshi) {
             sb.append(s + "\n");

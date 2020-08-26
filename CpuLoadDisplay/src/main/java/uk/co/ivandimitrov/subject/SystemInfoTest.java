@@ -53,7 +53,6 @@ public final class SystemInfoTest {
     public void start() {
         if (!hasStarted)
             synchronized (this) {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAa");
                 new Thread(() -> {
                     hasStarted = true;
                     while (true)
