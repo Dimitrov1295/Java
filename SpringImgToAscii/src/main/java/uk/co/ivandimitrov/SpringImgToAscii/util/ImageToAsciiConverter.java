@@ -2,12 +2,16 @@ package uk.co.ivandimitrov.SpringImgToAscii.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
@@ -15,9 +19,21 @@ import ij.process.ImageProcessor;
 @Service
 public class ImageToAsciiConverter {
 
-    public synchronized String convertImageToAscii(InputStream in) throws IOException {
-        ImagePlus image = new ImagePlus("Image", ImageIO.read(in));
-        return new ImageToAsciiConverter().process(image);
+    ImageToAsciiUtil util;
+
+    @Autowired
+    public ImageToAsciiConverter(ImageToAsciiUtil util) {
+        this.util = util;
+    }
+
+    public String convertImageToAscii(String url, MultipartFile file) throws IOException {
+        InputStream in = null;
+        if (url.length() > 0) {
+            in = new URL(url).openStream();
+        } else if (file != null) {
+            in = file.getInputStream();
+        }
+        return process(new ImagePlus("Image", ImageIO.read(in)));
     }
 
     // Processes the image pixel by pixel and sets appropriate ASCII chars for every
@@ -28,15 +44,15 @@ public class ImageToAsciiConverter {
         ImagePlus imp = new ImagePlus("", imageProcessor.resize(300, 300));
         int[] size = imp.getDimensions();
         int width = size[0], height = size[1];
-        ImageToAsciiUtil util = new ImageToAsciiUtil();
         return IntStream.range(0, width * height)
                 .map(i -> i % width != 0 ? util.convertToBrightness(imp.getPixel((i % width), (i / width))) : -1)
                 .mapToObj(i -> i == -1 ? "\n" : util.getAsciiSymbol(i)).collect(Collectors.joining());
     }
 
-    /**
+    /*
      * Utility class for converting images to ASCII characters.
      */
+    @Component
     private static class ImageToAsciiUtil {
 
         /**
@@ -72,5 +88,4 @@ public class ImageToAsciiConverter {
             return s + s + s;
         }
     }
-
 }

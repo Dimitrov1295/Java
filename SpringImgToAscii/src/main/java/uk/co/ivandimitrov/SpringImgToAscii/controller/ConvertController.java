@@ -1,9 +1,6 @@
 package uk.co.ivandimitrov.SpringImgToAscii.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,17 +26,12 @@ public class ConvertController {
 
     @RequestMapping("convert")
     public ModelAndView convert(@RequestParam(value = "imageUrl", required = false) String url,
-            @RequestParam(value = "imageFile", required = false) MultipartFile file)
-            throws MalformedURLException, IOException {// Returns the converted image
+            @RequestParam(value = "imageFile", required = false) MultipartFile file) throws IOException {// Returns the
+                                                                                                         // converted
+                                                                                                         // image
         ModelAndView mv = new ModelAndView();
         mv.setViewName("image");
-        InputStream in = null;
-        if (url.length() > 0) {
-            in = new URL(url).openStream();
-        } else if (file != null) {
-            in = file.getInputStream();
-        }
-        mv.addObject("ascii", converter.convertImageToAscii(in));
+        mv.addObject("ascii", converter.convertImageToAscii(url, file));
         return mv;
     }
 
