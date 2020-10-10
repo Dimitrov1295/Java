@@ -1,1 +1,0 @@
-This is a fast way to compute the factorial of numbers using multicore processors and Java's ForkJoin framework.
