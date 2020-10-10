@@ -1,2 +1,2 @@
 # Java
-This repository demonstrates some Java uses
+This repo contains some simple plain Java apps (mostly calculations and algorithm implementations).
